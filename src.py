@@ -28,7 +28,18 @@ def visualizar_tarefas():
 
 #Marcar tarefa como concluída1
 def concluir():
-    pass
+    
+    nome = input('Digite o nome da tarefa que deseja concluir: ')
+    conexao = sqlite3.connect('tarefas.db')
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE Tarefas SET concluido = ? WHERE nome = ?",(1,nome))
+    conexao.commit()
+    if cursor.rowcount > 0:
+        print(f"Tarefa '{nome}' concluída!")
+    else:
+        print(f"Nenhuma tarefa encontrada com o nome '{nome}'.")
+
+
 #Excluir tarefa
 def excluir():
     pass
