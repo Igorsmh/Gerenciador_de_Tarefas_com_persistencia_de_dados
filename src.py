@@ -42,7 +42,12 @@ def concluir():
 
 #Excluir tarefa
 def excluir():
-    pass
+  
+    nome = input("Digite o nome da tarefa que deseja excluir: ")
+    conexao = sqlite3.connect('tarefas.db')
+    cursor = conexao.cursor()
+    cursor.execute("DELETE FROM Tarefas WHERE nome = ?", (nome,))
+    conexao.commit()
 
 #Sair
 def sair():
