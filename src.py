@@ -1,11 +1,10 @@
+from rich.table import  Table
+from rich.console import Console
 from rich import print
 import sqlite3
 
 
-escolha = input(
-"Escolha uma das opções:\n[1] - Criar uma Tarefa\n\
-[2] - Visualizar Tarefas\n[3] - Marcar Tarefa como concluída\n\
-[4] - Excluir Tarefa\n[5] - Sair\n")
+
 
 #Criar tarefa
 def criar_tarefa():
@@ -29,13 +28,30 @@ def visualizar_tarefas():
 
     tarefas = cursor.fetchall()
 
+    console = Console()
+
+    tabela = Table(title="Tarefas")
+    tabela.add_column("Nome", justify="left", style="cyan", no_wrap=True)
+    tabela.add_column("Descrição", justify="left", style="cyan", no_wrap=True)
+    tabela.add_column("Status", justify="left", style="cyan", no_wrap=True)
+
+
     for tarefa in tarefas:
         nome, descricao, concluido = tarefa
-        status = "Concluído" if concluido == 1 else "Pendente"
-        print(f"Nome: {nome}, Descrição: {descricao}, Status: {status}")
+        #status = "Concluído :white_check_mark:" if concluido == 1 else "Pendente..."
+        #print(f"{nome}, {descricao}, [red]{status}[/]")
+        
+        if concluido == 1:
+            status = "[green]Concluído :white_check_mark:[/green]"
+            tabela.add_row(nome, descricao, status)
+            #print(f"{nome}, {descricao}, [green]{status}[/]")
+        else:
+            status = "[red]Pendente...[/red]"
+            tabela.add_row(nome, descricao, status)
+            #print(f"{nome}, {descricao}, [red]{status}[/]")
 
-
-
+    console.print(tabela)
+    
     conexao.close()
 
 
@@ -71,8 +87,31 @@ def sair():
     exit()
 
 
+
+def criar_base():
+    conexao = sqlite3.connect('tarefas.db')
+    cursor = conexao.cursor()
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Tarefas (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+    nome VARCHAR(80),
+    describ VARCHAR (200),
+    concluido BOOLEAN DEFAULT 0
+    )
+    """)
+    
+    conexao.commit()
+
+
 def menu():
-    opcoes = {'1': criar_tarefa, 
+
+    escolha = input(
+    "Escolha uma das opções:\n[1] - Criar uma Tarefa\n\
+[2] - Visualizar Tarefas\n[3] - Marcar Tarefa como concluída\n\
+[4] - Excluir Tarefa\n[5] - Sair\n")
+
+
+    opcoes = {'1': criar_tarefa,
             '2': visualizar_tarefas, 
             '3': concluir,
             '4': excluir,
