@@ -70,13 +70,15 @@ def sair():
     print("Saindo...")
     exit()
 
-opcoes = {'1': criar_tarefa, 
-        '2': visualizar_tarefas, 
-        '3': concluir,
-        '4': excluir,
-        '5': sair }
 
-try:
-    opcoes[escolha]()
-except KeyError:
-    print("Opção inválida. Tente novamente.")
+def menu():
+    opcoes = {'1': criar_tarefa, 
+            '2': visualizar_tarefas, 
+            '3': concluir,
+            '4': excluir,
+            '5': sair }
+
+    try:
+        opcoes[escolha]()
+    except KeyError:
+        print("Opção inválida. Tente novamente.")
