@@ -1,8 +1,9 @@
 from rich.table import  Table
 from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
 from rich import print
 import sqlite3
-
 
 
 
@@ -105,10 +106,12 @@ def criar_base():
 
 def menu():
 
-    escolha = input(
-    "Escolha uma das opções:\n[1] - Criar uma Tarefa\n\
+
+    print("[bold] Escolha uma das opções:\n[1] - Criar uma Tarefa\n\
 [2] - Visualizar Tarefas\n[3] - Marcar Tarefa como concluída\n\
-[4] - Excluir Tarefa\n[5] - Sair\n")
+[4] - Excluir Tarefa\n[5] - Sair\n[/]")
+    
+    escolha = input("")
 
 
     opcoes = {'1': criar_tarefa,
@@ -121,3 +124,26 @@ def menu():
         opcoes[escolha]()
     except KeyError:
         print("Opção inválida. Tente novamente.")
+
+
+
+def apresentacao():
+   
+    console = Console()
+    titulo = 'Bem-vindo(a) ao Gerenciador de Tarefas!'
+    # Cria um texto com o título, centralizado e com tamanho grande
+    texto_titulo = Text(titulo, justify="center", style="bold magenta")
+    
+    # Cria um painel com o título
+    painel = Panel(
+        texto_titulo,
+        title="Gerenciador de Tarefas",
+        title_align="center",
+        border_style="green"
+    )
+    
+    # Imprime o painel no console
+    console.print(painel)
+    print('\n')
+
+  
