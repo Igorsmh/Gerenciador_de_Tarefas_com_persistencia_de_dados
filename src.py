@@ -161,4 +161,5 @@ def clean():
     Console().clear()
 
 
-
+# TODO permitir multiplas adições, exclusões, conclusões de uma vez
+# TODO Resetar o indice das tarefas pos exclusão das mesmas
