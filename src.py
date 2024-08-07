@@ -25,60 +25,59 @@ def criar_tarefa():
 def visualizar_tarefas():
     conexao = sqlite3.connect('tarefas.db')
     cursor = conexao.cursor()
-    cursor.execute("SELECT nome, describ, concluido FROM Tarefas")
+    cursor.execute("SELECT id, nome, describ, concluido FROM Tarefas")
 
     tarefas = cursor.fetchall()
 
     console = Console()
 
     tabela = Table(title="Tarefas")
+    tabela.add_column("ID", justify="left", style="cyan", no_wrap=True)
     tabela.add_column("Nome", justify="left", style="cyan", no_wrap=True)
     tabela.add_column("Descrição", justify="left", style="cyan", no_wrap=True)
     tabela.add_column("Status", justify="left", style="cyan", no_wrap=True)
 
 
     for tarefa in tarefas:
-        nome, descricao, concluido = tarefa
-        #status = "Concluído :white_check_mark:" if concluido == 1 else "Pendente..."
-        #print(f"{nome}, {descricao}, [red]{status}[/]")
+        id, nome, descricao, concluido = tarefa
         
         if concluido == 1:
             status = "[green]Concluído :white_check_mark:[/green]"
-            tabela.add_row(nome, descricao, status)
-            #print(f"{nome}, {descricao}, [green]{status}[/]")
+            tabela.add_row(str(id), nome, descricao, status)
+            
         else:
             status = "[red]Pendente...[/red]"
-            tabela.add_row(nome, descricao, status)
-            #print(f"{nome}, {descricao}, [red]{status}[/]")
+            tabela.add_row(str(id), nome, descricao, status)
 
     console.print(tabela)
     
     conexao.close()
 
 
-#Marcar tarefa como concluída1
+#Marcar tarefa como concluída
 def concluir():
     
-    nome = input('Digite o nome da tarefa que deseja concluir: ')
+    id = input('Digite o id da tarefa que deseja concluir: ')
     conexao = sqlite3.connect('tarefas.db')
     cursor = conexao.cursor()
-    cursor.execute("UPDATE Tarefas SET concluido = ? WHERE nome = ?",\
-                   (1,nome))
+    cursor.execute("UPDATE Tarefas SET concluido = ? WHERE id = ?",\
+                   (1,id))
     conexao.commit()
     if cursor.rowcount > 0:
-        print(f"Tarefa '{nome}' concluída!")
+        print(f"Tarefa '{id}' concluída!")
     else:
-        print(f"Nenhuma tarefa encontrada com o nome '{nome}'.")
+        print(f"Nenhuma tarefa encontrada com o nome '{id}'.")
     conexao.close()
 
 
 #Excluir tarefa
 def excluir():
   
-    nome = input("Digite o nome da tarefa que deseja excluir: ")
+    id = input("Digite o id da tarefa que deseja excluir: ")
     conexao = sqlite3.connect('tarefas.db')
     cursor = conexao.cursor()
-    cursor.execute("DELETE FROM Tarefas WHERE nome = ?", (nome,))
+    cursor.execute("DELETE FROM Tarefas WHERE id = ?", (id,))
+    cursor.execute("UPDATE id")
     conexao.commit()
     conexao.close()
 
@@ -146,4 +145,7 @@ def apresentacao():
     console.print(painel)
     print('\n')
 
-  
+
+def clean():
+    Console().clear()
+
