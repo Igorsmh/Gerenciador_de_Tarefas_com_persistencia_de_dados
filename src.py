@@ -67,18 +67,29 @@ def concluir():
         print(f"Tarefa '{id}' concluída!")
     else:
         print(f"Nenhuma tarefa encontrada com o nome '{id}'.")
+    
+    visualizar_tarefas()
+    print("\n")
     conexao.close()
 
 
 #Excluir tarefa
 def excluir():
   
+    visualizar_tarefas()
+    print("\n")
     id = input("Digite o id da tarefa que deseja excluir: ")
     conexao = sqlite3.connect('tarefas.db')
     cursor = conexao.cursor()
     cursor.execute("DELETE FROM Tarefas WHERE id = ?", (id,))
-    cursor.execute("UPDATE id")
+    if cursor.rowcount > 0:
+        print(f"Tarefa '{id}' excluida!\n")
+    else:
+        print(f"Nenhuma tarefa encontrada com o nome '{id}'.\n")
+    
     conexao.commit()
+    visualizar_tarefas()
+
     conexao.close()
 
 #Sair
@@ -148,4 +159,6 @@ def apresentacao():
 
 def clean():
     Console().clear()
+
+
 
