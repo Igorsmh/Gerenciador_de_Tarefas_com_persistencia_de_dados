@@ -3,12 +3,10 @@ from src import *
 
 
 if __name__ == "__main__":
+    clean()
     apresentacao()
+    criar_base()
     while True:
-        criar_base()
         menu()
-        input("Aperte qualquer tecla para voltar ao menu...\n")
-
-
-
-
+        input("Aperte ENTER para voltar ao menu...\n")
+        clean()
