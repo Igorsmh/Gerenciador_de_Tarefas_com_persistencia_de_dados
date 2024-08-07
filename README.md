@@ -37,3 +37,12 @@ Este repositório contém um projeto de Gerenciador de Tarefas, que utiliza Pyth
 
 - Python 
 - SQLite 
+
+
+# Funções futuras
+
+Acredito que muitas coisas poderiam ser implementas mas, este é um programa simples, sem ambição de ser algo realmente funcional, 
+com proposito de estudos somente, mesmo assim existem alguns pontos que acredito poderiam ser melhorados:
+
+- Permitir multiplas adições, exclusões, conclusões de uma vez.
+- Resetar o  ID das tarefas pós exclusão das mesmas.
