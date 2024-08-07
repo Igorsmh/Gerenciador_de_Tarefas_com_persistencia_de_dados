@@ -32,3 +32,8 @@ Este repositório contém um projeto de Gerenciador de Tarefas, que utiliza Pyth
    ```bash
    Gerenciador de Tarefas.exe
    ```
+
+# Tecnologias Utilizadas
+
+- Python 
+- SQLite 
